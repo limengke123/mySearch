@@ -1,0 +1,11 @@
+.search {
+  min-height: 100vh;
+  background: #282c34;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 100px;
+  .main {
+    width: 800px;
+  }
+}
