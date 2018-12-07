@@ -15,7 +15,7 @@ export default class SearchResult extends React.Component {
     }
 
     handleSearch (value) {
-       console.log(value)
+        console.log(value)
     }
 
     render () {
