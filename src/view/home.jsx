@@ -3,6 +3,7 @@ import Input from 'antd/lib/input'
 import { withRouter } from 'react-router-dom'
 // import logo from "../logo.svg";
 import style from '../style/home.module.scss'
+import { fetchLinks } from '../service/search'
 
 const Search = Input.Search
 
@@ -16,8 +17,15 @@ class Home extends React.Component{
 
     handleSearch (value) {
         console.log(value)
-        const {history} = this.props
-        history.push('/search')
+        fetchLinks({
+            website: '种子搜',
+            key: '毒液',
+            page: '1'
+        }).then(res => {
+                console.log(res)
+        })
+        // const {history} = this.props
+        // history.push('/search')
     }
 
     render () {
