@@ -14,3 +14,8 @@ export const setIsLoading = (isLoading) => ({
     type: actionType.SET_IS_LOADING,
     payload: isLoading
 })
+
+export const loadSearchList = () => ({
+    type: actionType.LOAD_SEARCH_LIST
+})
+

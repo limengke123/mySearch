@@ -1,4 +1,9 @@
 import React from 'react'
+import { compose } from 'redux'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import queryString from 'query-string'
+import { setSearchField, loadSearchList } from '../store/actions/search'
 // import Button from 'antd/lib/button'
 import Input from 'antd/lib/input'
 import Spin from 'antd/lib/spin'
@@ -7,7 +12,7 @@ import style from '../style/search.module.scss'
 
 const Search = Input.Search;
 
-export default class SearchResult extends React.Component {
+class SearchResult extends React.Component {
 
     constructor(props) {
         super(props);
@@ -16,6 +21,20 @@ export default class SearchResult extends React.Component {
 
     handleSearch (value) {
         console.log(value)
+    }
+
+    componentWillMount () {
+        const { location, searchWord } = this.props
+        const { search } = location
+        const { word } = queryString.parse(search)
+        if (word !== searchWord) {
+            setSearchField(word)
+        }
+    }
+
+    componentDidMount () {
+        const { loadSearchList } = this.props
+        loadSearchList()
     }
 
     render () {
@@ -51,3 +70,21 @@ export default class SearchResult extends React.Component {
         )
     }
 }
+
+const mapStateToProps = ({ search }) => ({
+    searchWord: search.searchWord
+})
+
+const mapDispatchToProps = (dispatch) => ({
+    setSearchField: function (value) {
+        dispatch(setSearchField(value))
+    },
+    loadSearchList: function () {
+        dispatch(loadSearchList())
+    }
+})
+
+export default compose(
+    connect(mapStateToProps, mapDispatchToProps),
+    withRouter
+)(SearchResult)

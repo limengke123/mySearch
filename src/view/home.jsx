@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import Input from 'antd/lib/input'
 import { withRouter } from 'react-router-dom'
-// import logo from "../logo.svg";
 import style from '../style/home.module.scss'
 import { fetchLinks } from '../service/search'
 import { setSearchField } from '../store/actions/search'
@@ -20,7 +19,7 @@ class Home extends React.Component{
 
     handleChange (e) {
         const { setSearchField } = this.props
-        console.log(e)
+        console.log(e.target.value)
         setSearchField(e.target.value)
     }
 
@@ -34,17 +33,17 @@ class Home extends React.Component{
         //         console.log(res)
         // })
         const {history} = this.props
-        history.push('/search')
+        history.push(`/search?word=${value}`)
     }
 
     render () {
-        const { searchField } = this.props
+        const { searchWord } = this.props
         return (
             <div className="App">
                 <header className="App-header">
                     <div className={style.home}>
                         <Search
-                            value={searchField}
+                            value={searchWord}
                             size={'large'}
                             placeholder={'input search text'}
                             enterButton={'search'}
@@ -58,15 +57,15 @@ class Home extends React.Component{
 }
 
 const mapStateToProps = function (state) {
+    const { search } = state
     return {
-        searchField: state.searchField
+        searchWord: search.searchWord
     }
 }
 
 const mapDispatchToProps = function (dispatch) {
     return {
         setSearchField: function (value) {
-            console.log(value)
             dispatch(setSearchField(value))
         }
     }
