@@ -19,7 +19,6 @@ class Home extends React.Component{
 
     handleChange (e) {
         const { setSearchField } = this.props
-        console.log(e.target.value)
         setSearchField(e.target.value)
     }
 

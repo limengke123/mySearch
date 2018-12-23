@@ -17,10 +17,17 @@ class SearchResult extends React.Component {
     constructor(props) {
         super(props);
         this.handleSearch = this.handleSearch.bind(this)
+        this.handleChange = this.handleChange.bind(this)
     }
 
-    handleSearch (value) {
-        console.log(value)
+    handleSearch () {
+        const { loadSearchList } = this.props
+        loadSearchList()
+    }
+
+    handleChange (e) {
+        const { setSearchField } = this.props
+        setSearchField(e.target.value)
     }
 
     componentWillMount () {
@@ -38,20 +45,11 @@ class SearchResult extends React.Component {
     }
 
     render () {
-        const listData = [
-            {
-                name: '毒液',
-                formatSize: '2.2g',
-                count: '3028-12--5',
-                detailUrl: 'http://bsdjkaaidu.com'
-            },
-            {
-                name: '毒液',
-                formatSize: '2.2g',
-                count: '3028-12--5',
-                detailUrl: 'http://baidufdsakss.com'
-            }
-        ]
+        const {
+            result,
+            isLoading,
+            searchWord
+        } = this.props
         return (
             <div className={style.search}>
                 {/*<Button type={'primary'}>test</Button>*/}
@@ -60,10 +58,12 @@ class SearchResult extends React.Component {
                         placeholder={'input search text'}
                         enterButton={'search'}
                         size={'large'}
+                        value={searchWord}
+                        onChange={this.handleChange}
                         onSearch={this.handleSearch}
                     />
-                    <Spin spinning={false}>
-                        <SearchList listData={listData}/>
+                    <Spin spinning={isLoading}>
+                        <SearchList listData={result}/>
                     </Spin>
                 </div>
             </div>
@@ -72,7 +72,9 @@ class SearchResult extends React.Component {
 }
 
 const mapStateToProps = ({ search }) => ({
-    searchWord: search.searchWord
+    searchWord: search.searchWord,
+    result: search.result,
+    isLoading: search.isLoading,
 })
 
 const mapDispatchToProps = (dispatch) => ({

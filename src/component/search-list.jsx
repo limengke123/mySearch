@@ -23,6 +23,7 @@ export default class SearchList extends React.Component {
                                 <span className={style.formatSize}>{ item.formatSize }</span>
                                 <span className={style.count}>{ item.count }</span>
                                 <div className={style.detailUrl}>{ item.detailUrl }</div>
+                                <div className={style.magnet}>{ item.magnet}</div>
                             </div>
                         )
                     })
